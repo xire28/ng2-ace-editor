@@ -6,9 +6,7 @@ import 'brace/mode/html';
 declare var ace:any;
 
 @Directive({
-  selector: '[ace-editor]',
-  inputs: ['text', 'mode', 'theme', 'readOnly', 'options', 'autoUpdateContent'],
-  outputs: ['textChanged']
+  selector: '[ace-editor]'
 })
 export class AceEditorDirective {
   @Output('textChanged') textChanged = new EventEmitter();
@@ -45,27 +43,27 @@ export class AceEditorDirective {
     });
   }
 
-  @Input() set options(options) {
+  @Input() set options(options: any) {
     this._options = options;
     this.editor.setOptions(options || {});
   }
 
-  @Input() set readOnly(readOnly) {
+  @Input() set readOnly(readOnly: any) {
     this._readOnly = readOnly;
     this.editor.setReadOnly(readOnly);
   }
 
-  @Input() set theme(theme) {
+  @Input() set theme(theme: any) {
     this._theme = theme;
     this.editor.setTheme(`ace/theme/${theme}`);
   }
 
-  @Input() set mode(mode) {
+  @Input() set mode(mode: any) {
     this._mode = mode;
     this.editor.getSession().setMode(`ace/mode/${mode}`);
   }
 
-  @Input() set text(text) {
+  @Input() set text(text: any) {
       if(text == null)
           text = "";
 
@@ -76,7 +74,7 @@ export class AceEditorDirective {
       }
   }
 
-  @Input() set autoUpdateContent(status) {
+  @Input() set autoUpdateContent(status: any) {
       this._autoUpdateContent = status;
   }
 }
