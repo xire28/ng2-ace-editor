@@ -1,6 +1,6 @@
 {
   "name": "ng2-ace-editor",
-  "version": "0.0.21",
+  "version": "0.1.0",
   "description": "Ace editor integration with typescript for angular 2.",
   "main": "ng2-ace-editor.js",
   "typings": "ng2-ace-editor.d.ts",
@@ -17,6 +17,8 @@
     "angular cli",
     "ace",
     "typescript",
+    "directive",
+    "component",
     "editor",
     "ng2-ace",
     "angular2-ace"
@@ -27,6 +29,7 @@
     "url": "https://github.com/fxmontigny/ng2-ace-editor/issues"
   },
   "dependencies": {
+    "ace-builds": "^1.2.5",
     "brace": "^0.8.0"
   },
   "peerDependencies": {

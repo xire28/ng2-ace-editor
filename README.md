@@ -6,13 +6,14 @@ Ace editor integration with typescript for angular 2.
 # Install
 `npm i -s ng2-ace-editor`
 
-# Sample Usage
+# Use directive
 
 > Minimal
 
 ```js
-import { Component } from 'angular2/core';
-import { AceEditorDirective } from 'ng2-ace-editor';
+//add "AceEditorDirective" to your modules list
+
+import { Component } from '@angular/core';
 
 @Component({
   directives: [AceEditorDirective],
@@ -29,11 +30,13 @@ export class MyComponent {
 > Complete
 
 ```js
-import { Component } from 'angular2/core';
-import { AceEditorDirective } from 'ng2-ace-editor';
+//add "AceEditorDirective" to your modules list
+//import { AceEditorDirective } from 'ng2-ace-editor';
 
-import 'brace/theme/clouds';
-import 'brace/mode/sql';
+import { Component } from '@angular/core';
+
+//to use theme "eclipse"
+//with angular-cli add "../node_modules/ace-builds/src-min/ace.js" and "../node_modules/ace-builds/src-min/theme-eclipse.js" to "scripts" var into the file angular-cli.json
 
 @Component({
   directives: [AceEditorDirective],
@@ -41,7 +44,7 @@ import 'brace/mode/sql';
   <div ace-editor
        [text]="text"
        [mode]="'sql'"
-       [theme]="'clouds'"
+       [theme]="'eclipse'"
        [options]="options"
        [readOnly]="false"
        [autoUpdateContent]="true" //change content when [text] change
@@ -55,6 +58,45 @@ export class MyComponent {
     
     onChange(code) {
         console.log("new code", code);
+    }
+}
+```
+
+# Use Component
+
+```js
+//add "AceEditorComponent" to your modules list
+//import { AceEditorComponent } from 'ng2-ace-editor';
+
+import {Component, ViewChild} from '@angular/core';
+
+//to use theme eclipse
+//with angular-cli add "../node_modules/ace-builds/src-min/ace.js" and "../node_modules/ace-builds/src-min/theme-eclipse.js" to "scripts" var into the file angular-cli.json
+
+@Component({
+    template: `
+  <ace-editor
+       [text]="text" #editor style="height:150px;"></ace-editor>
+  `
+})
+export class AceCmp {
+    @ViewChild('editor') editor;
+    text: string = "";
+
+    ngAfterViewInit() {
+        this.editor.setTheme("eclipse");
+
+        this.editor.getEditor().setOptions({
+            enableBasicAutocompletion: true
+        });
+
+        this.editor.getEditor().commands.addCommand({
+            name: "showOtherCompletions",
+            bindKey: "Ctrl-.",
+            exec: function (editor) {
+
+            }
+        })
     }
 }
 ```

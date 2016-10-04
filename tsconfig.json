@@ -18,7 +18,8 @@
   },
   "files": [
     "ng2-ace-editor.ts",
-    "src/index.ts"
+    "src/directive.ts",
+    "src/component.ts"
   ],
   "exclude": [
     "node_modules",

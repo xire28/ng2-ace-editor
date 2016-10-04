@@ -1,3 +1,4 @@
-import {AceEditorDirective} from './src/index';
+import {AceEditorDirective} from './src/directive';
+import {AceEditorComponent} from './src/component';
 
-export {AceEditorDirective};
+export {AceEditorDirective, AceEditorComponent};
