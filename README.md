@@ -16,7 +16,6 @@ Ace editor integration with typescript for angular 2.
 import { Component } from '@angular/core';
 
 @Component({
-  directives: [AceEditorDirective],
   template: `
   <div ace-editor
        [text]="text"></div>
@@ -39,7 +38,6 @@ import { Component } from '@angular/core';
 //with angular-cli add "../node_modules/ace-builds/src-min/ace.js" and "../node_modules/ace-builds/src-min/theme-eclipse.js" to "scripts" var into the file angular-cli.json
 
 @Component({
-  directives: [AceEditorDirective],
   template: `
   <div ace-editor
        [text]="text"
