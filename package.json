@@ -33,7 +33,7 @@
     "brace": "^0.8.0"
   },
   "peerDependencies": {
-    "@angular/core": "2.0.0"
+    "@angular/core": "^2.0.0"
   },
   "devDependencies": {
     "@angular/core": "2.0.0",
