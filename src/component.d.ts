@@ -1,4 +1,7 @@
 import { EventEmitter, ElementRef } from '@angular/core';
+import 'brace';
+import 'brace/theme/monokai';
+import 'brace/mode/html';
 export declare class AceEditorComponent {
     textChanged: EventEmitter<{}>;
     style: any;

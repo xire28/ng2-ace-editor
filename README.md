@@ -1,4 +1,4 @@
-# ng2-ace
+# ng2-ace-editor
 
 [![npm version](https://badge.fury.io/js/ng2-ace-editor.svg)](https://www.npmjs.com/package/ng2-ace-editor) 
 Ace editor integration with typescript for angular 2.
@@ -35,7 +35,8 @@ export class MyComponent {
 import { Component } from '@angular/core';
 
 //to use theme "eclipse"
-//with angular-cli add "../node_modules/ace-builds/src-min/ace.js" and "../node_modules/ace-builds/src-min/theme-eclipse.js" to "scripts" var into the file angular-cli.json
+//with angular-cli add "../node_modules/ace-builds/src-min/ace.js" 
+//and "../node_modules/ace-builds/src-min/theme-eclipse.js" to "scripts" var into the file angular-cli.json
 
 @Component({
   template: `
@@ -69,7 +70,8 @@ export class MyComponent {
 import {Component, ViewChild} from '@angular/core';
 
 //to use theme eclipse
-//with angular-cli add "../node_modules/ace-builds/src-min/ace.js" and "../node_modules/ace-builds/src-min/theme-eclipse.js" to "scripts" var into the file angular-cli.json
+//with angular-cli add "../node_modules/ace-builds/src-min/ace.js" 
+//and "../node_modules/ace-builds/src-min/theme-eclipse.js" to "scripts" var into the file angular-cli.json
 
 @Component({
     template: `
@@ -100,4 +102,4 @@ export class AceCmp {
 ```
 
 # Used by
-[caravel.design](https://www.caravel.design) 
+[caravel.design](https://www.caravel.design) - [example](https://app.caravel.design/p/58/sample-user-research/s/316/ab-testing/codeSample/184/button-a)

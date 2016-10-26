@@ -14,8 +14,7 @@ var config = {
             typescript: './node_modules/typescript/lib/typescript.js',
             '@angular': './node_modules/@angular',
             rxjs: './node_modules/rxjs',
-            brace: './node_modules/brace/index.js',
-            ace: './node_modules/ace-builds/src-noconflict/ace.js'
+            brace: './node_modules/brace/index.js'
         },
         paths: {
             '*': '*.js'

@@ -119,7 +119,7 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
     exports.AceEditorDirective = AceEditorDirective;
     return module.exports;
 });
-System.registerDynamic("src/component", ["@angular/core"], true, function ($__require, exports, module) {
+System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/monokai", "brace/mode/html"], true, function ($__require, exports, module) {
     "use strict";
 
     var define,
@@ -136,6 +136,9 @@ System.registerDynamic("src/component", ["@angular/core"], true, function ($__re
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1 = $__require("@angular/core");
+    $__require("brace");
+    $__require("brace/theme/monokai");
+    $__require("brace/mode/html");
     var AceEditorComponent = function () {
         function AceEditorComponent(elementRef) {
             this.textChanged = new core_1.EventEmitter();
@@ -151,10 +154,10 @@ System.registerDynamic("src/component", ["@angular/core"], true, function ($__re
             this.initEvents();
         }
         AceEditorComponent.prototype.init = function () {
-            this._editor.setOptions(this._options || {});
-            this._editor.setTheme("ace/theme/" + this._theme);
-            this._editor.getSession().setMode("ace/mode/" + this._mode);
-            this._editor.setReadOnly(this._readOnly);
+            this.setOptions(this._options || {});
+            this.setTheme(this._theme);
+            this.setMode(this._mode);
+            this.setReadOnly(this._readOnly);
         };
         AceEditorComponent.prototype.initEvents = function () {
             var _this = this;

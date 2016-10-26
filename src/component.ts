@@ -1,4 +1,7 @@
 import {Component, EventEmitter, Output, ElementRef, Input} from '@angular/core';
+import 'brace';
+import 'brace/theme/monokai';
+import 'brace/mode/html';
 
 declare var ace: any;
 
@@ -27,10 +30,10 @@ export class AceEditorComponent {
     }
 
     init() {
-        this._editor.setOptions(this._options || {});
-        this._editor.setTheme(`ace/theme/${this._theme}`);
-        this._editor.getSession().setMode(`ace/mode/${this._mode}`);
-        this._editor.setReadOnly(this._readOnly);
+        this.setOptions(this._options || {});
+        this.setTheme(this._theme);
+        this.setMode(this._mode);
+        this.setReadOnly(this._readOnly);
     }
 
     initEvents() {
