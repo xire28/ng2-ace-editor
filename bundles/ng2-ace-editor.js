@@ -148,6 +148,7 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
             this._theme = "monokai";
             this._mode = "html";
             this._autoUpdateContent = true;
+            this._durationBeforeCallback = 0;
             var el = elementRef.nativeElement;
             this._editor = ace["edit"](el);
             this.init();
@@ -160,12 +161,20 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
             this.setReadOnly(this._readOnly);
         };
         AceEditorComponent.prototype.initEvents = function () {
-            var _this = this;
-            this._editor.on('change', function () {
-                var newVal = _this._editor.getValue();
-                if (newVal === _this.oldText) return;
-                if (typeof _this.oldText !== 'undefined') _this.textChanged.emit(newVal);
-                _this.oldText = newVal;
+            var me = this;
+            me._editor.on('change', function () {
+                var newVal = me._editor.getValue();
+                if (newVal === me.oldText) return;
+                if (typeof me.oldText !== 'undefined') {
+                    if (me._durationBeforeCallback == 0) me.textChanged.emit(newVal);else {
+                        if (me.timeoutSaving != null) clearTimeout(me.timeoutSaving);
+                        me.timeoutSaving = setTimeout(function () {
+                            me.textChanged.emit(newVal);
+                            me.timeoutSaving = null;
+                        }, me._durationBeforeCallback);
+                    }
+                }
+                me.oldText = newVal;
             });
         };
         Object.defineProperty(AceEditorComponent.prototype, "options", {
@@ -237,6 +246,16 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
         AceEditorComponent.prototype.setAutoUpdateContent = function (status) {
             this._autoUpdateContent = status;
         };
+        Object.defineProperty(AceEditorComponent.prototype, "durationBeforeCallback", {
+            set: function (num) {
+                this.setDurationBeforeCallback(num);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        AceEditorComponent.prototype.setDurationBeforeCallback = function (num) {
+            this._durationBeforeCallback = num;
+        };
         AceEditorComponent.prototype.getEditor = function () {
             return this._editor;
         };
@@ -248,6 +267,7 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "mode", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "text", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "autoUpdateContent", null);
+        __decorate([core_1.Input(), __metadata('design:type', Number), __metadata('design:paramtypes', [Number])], AceEditorComponent.prototype, "durationBeforeCallback", null);
         AceEditorComponent = __decorate([core_1.Component({
             selector: 'ace-editor',
             template: '',

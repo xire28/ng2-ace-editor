@@ -19,7 +19,9 @@ export class AceEditorComponent {
     _mode: string = "html";
     _autoUpdateContent: boolean = true;
     _editor: any;
+    _durationBeforeCallback: number = 0;
     oldText: any;
+    timeoutSaving: any;
 
     constructor(elementRef: ElementRef) {
         let el = elementRef.nativeElement;
@@ -37,12 +39,25 @@ export class AceEditorComponent {
     }
 
     initEvents() {
-        this._editor.on('change', () => {
-            let newVal = this._editor.getValue();
-            if (newVal === this.oldText) return;
-            if (typeof this.oldText !== 'undefined')
-                this.textChanged.emit(newVal);
-            this.oldText = newVal;
+        let me = this;
+
+        me._editor.on('change', () => {
+            let newVal = me._editor.getValue();
+            if (newVal === me.oldText) return;
+            if (typeof me.oldText !== 'undefined') {
+                if (me._durationBeforeCallback == 0)
+                    me.textChanged.emit(newVal);
+                else {
+                    if (me.timeoutSaving != null)
+                        clearTimeout(me.timeoutSaving);
+
+                    me.timeoutSaving = setTimeout(function () {
+                        me.textChanged.emit(newVal);
+                        me.timeoutSaving = null;
+                    }, me._durationBeforeCallback);
+                }
+            }
+            me.oldText = newVal;
         });
     }
 
@@ -103,6 +118,14 @@ export class AceEditorComponent {
 
     setAutoUpdateContent(status: any) {
         this._autoUpdateContent = status;
+    }
+
+    @Input() set durationBeforeCallback(num: number) {
+        this.setDurationBeforeCallback(num);
+    }
+
+    setDurationBeforeCallback(num: number) {
+        this._durationBeforeCallback = num;
     }
 
     getEditor() {

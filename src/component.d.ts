@@ -11,7 +11,9 @@ export declare class AceEditorComponent {
     _mode: string;
     _autoUpdateContent: boolean;
     _editor: any;
+    _durationBeforeCallback: number;
     oldText: any;
+    timeoutSaving: any;
     constructor(elementRef: ElementRef);
     init(): void;
     initEvents(): void;
@@ -27,5 +29,7 @@ export declare class AceEditorComponent {
     setText(text: any): void;
     autoUpdateContent: any;
     setAutoUpdateContent(status: any): void;
+    durationBeforeCallback: number;
+    setDurationBeforeCallback(num: number): void;
     getEditor(): any;
 }

@@ -47,6 +47,7 @@ import { Component } from '@angular/core';
        [options]="options"
        [readOnly]="false"
        [autoUpdateContent]="true" //change content when [text] change
+       [durationBeforeCallback]="1000" //wait 1s before callback 'textChanged' sends new value
        (textChanged)="onChange($event)"
        style="min-height: 200px; width:100%; overflow: auto;"></div>
   `
