@@ -1,0 +1,7 @@
+<h1>
+  SQL
+</h1>
+<ace-editor [text]="initialSql"
+            (textChanged)="editedQuery.Query=$event; log(editedQuery.Query)"
+            style="min-height: 200px; width:100%; overflow: auto;"
+            [mode]="'sql'">
