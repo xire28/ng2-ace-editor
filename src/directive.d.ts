@@ -7,7 +7,7 @@ export declare class AceEditorDirective {
     _options: any;
     _readOnly: boolean;
     _theme: string;
-    _mode: string;
+    _mode: any;
     _autoUpdateContent: boolean;
     editor: any;
     oldText: any;
