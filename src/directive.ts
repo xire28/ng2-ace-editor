@@ -60,7 +60,7 @@ export class AceEditorDirective {
 
     @Input() set mode(mode: any) {
         this._mode = mode;
-        if (typeof this.mode == 'object') {
+        if (typeof this._mode == 'object') {
             this.editor.getSession().setMode(this._mode);
         }
         else {

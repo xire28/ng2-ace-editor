@@ -73,7 +73,7 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
         Object.defineProperty(AceEditorDirective.prototype, "mode", {
             set: function (mode) {
                 this._mode = mode;
-                if (typeof this.mode == 'object') {
+                if (typeof this._mode == 'object') {
                     this.editor.getSession().setMode(this._mode);
                 } else {
                     this.editor.getSession().setMode("ace/mode/" + this._mode);
