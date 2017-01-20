@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+
+declare var ace:any;
 
 @Component({
   selector: 'app-root',
@@ -6,12 +8,18 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  initialSql = "SELECT * FROM tabs;";
-  editedQuery: any = {
-    Query: ""
+  content = "SELECT * FROM tabs;";
+  @ViewChild('highlight') highlight;
+
+  onRuleChange(e) {
+    console.log(e)
   }
 
-  log(text) {
-    console.log(text)
+  ngAfterViewInit() {
+    var Range = ace.require('ace/range').Range
+
+    this.highlight.getEditor().session.addMarker(
+      new Range(0, 0, 2, 1), "myMarker", "fullLine"
+    );
   }
 }
