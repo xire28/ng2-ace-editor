@@ -18,7 +18,8 @@ import { Component } from '@angular/core';
 @Component({
   template: `
   <div ace-editor
-       [text]="text"></div>
+       [(text)]="text" // possible two way binding (thx ChrisProlls)
+       ></div>
   `
 })
 export class MyComponent {
@@ -41,7 +42,7 @@ import { Component } from '@angular/core';
 @Component({
   template: `
   <div ace-editor
-       [text]="text"
+       [(text)]="text" // possible two way binding (thx ChrisProlls)
        [mode]="'sql'" //string or object (thx ckiffel)
        [theme]="'eclipse'"
        [options]="options"
@@ -77,7 +78,8 @@ import {Component, ViewChild} from '@angular/core';
 @Component({
     template: `
   <ace-editor
-       [text]="text" #editor style="height:150px;"></ace-editor>
+       [(text)]="text" // possible two way binding (thx ChrisProlls)
+        #editor style="height:150px;"></ace-editor>
   `
 })
 export class AceCmp {

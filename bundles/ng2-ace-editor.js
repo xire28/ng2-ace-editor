@@ -21,11 +21,14 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
     var AceEditorDirective = function () {
         function AceEditorDirective(elementRef) {
             this.textChanged = new core_1.EventEmitter();
+            this.textChange = new core_1.EventEmitter();
             this._options = {};
             this._readOnly = false;
             this._theme = "monokai";
             this._mode = "html";
             this._autoUpdateContent = true;
+            this._durationBeforeCallback = 0;
+            this._text = "";
             var el = elementRef.nativeElement;
             this.editor = ace["edit"](el);
             this.init();
@@ -39,10 +42,25 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
         };
         AceEditorDirective.prototype.initEvents = function () {
             var _this = this;
-            this.editor.on('change', function () {
+            var me = this;
+            me.editor.on('change', function () {
                 var newVal = _this.editor.getValue();
                 if (newVal === _this.oldText) return;
-                if (typeof _this.oldText !== 'undefined') _this.textChanged.emit(newVal);
+                if (typeof me.oldText !== 'undefined') {
+                    if (me._durationBeforeCallback == 0) {
+                        me._text = newVal;
+                        me.textChange.emit(newVal);
+                        me.textChanged.emit(newVal);
+                    } else {
+                        if (me.timeoutSaving != null) clearTimeout(me.timeoutSaving);
+                        me.timeoutSaving = setTimeout(function () {
+                            me._text = newVal;
+                            me.textChange.emit(newVal);
+                            me.textChanged.emit(newVal);
+                            me.timeoutSaving = null;
+                        }, me._durationBeforeCallback);
+                    }
+                }
                 _this.oldText = newVal;
             });
         };
@@ -86,17 +104,24 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
             }
         };
         Object.defineProperty(AceEditorDirective.prototype, "text", {
+            get: function () {
+                return this._text;
+            },
             set: function (text) {
-                if (text == null) text = "";
-                if (this._autoUpdateContent == true) {
-                    this.editor.setValue(text);
-                    this.editor.clearSelection();
-                    this.editor.focus();
-                }
+                this.setText(text);
             },
             enumerable: true,
             configurable: true
         });
+        AceEditorDirective.prototype.setText = function (text) {
+            if (text == null) text = "";
+            if (this._autoUpdateContent == true) {
+                this._text = text;
+                this.editor.setValue(text);
+                this.editor.clearSelection();
+                this.editor.focus();
+            }
+        };
         Object.defineProperty(AceEditorDirective.prototype, "autoUpdateContent", {
             set: function (status) {
                 this._autoUpdateContent = status;
@@ -104,6 +129,16 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(AceEditorDirective.prototype, "durationBeforeCallback", {
+            set: function (num) {
+                this.setDurationBeforeCallback(num);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        AceEditorDirective.prototype.setDurationBeforeCallback = function (num) {
+            this._durationBeforeCallback = num;
+        };
         Object.defineProperty(AceEditorDirective.prototype, "aceEditor", {
             get: function () {
                 return this.editor;
@@ -111,13 +146,15 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
             enumerable: true,
             configurable: true
         });
-        __decorate([core_1.Output('textChanged'), __metadata('design:type', Object)], AceEditorDirective.prototype, "textChanged", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', Object)], AceEditorDirective.prototype, "textChanged", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', Object)], AceEditorDirective.prototype, "textChange", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorDirective.prototype, "options", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorDirective.prototype, "readOnly", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorDirective.prototype, "theme", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorDirective.prototype, "mode", null);
-        __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorDirective.prototype, "text", null);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], AceEditorDirective.prototype, "text", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorDirective.prototype, "autoUpdateContent", null);
+        __decorate([core_1.Input(), __metadata('design:type', Number), __metadata('design:paramtypes', [Number])], AceEditorDirective.prototype, "durationBeforeCallback", null);
         AceEditorDirective = __decorate([core_1.Directive({
             selector: '[ace-editor]'
         }), __metadata('design:paramtypes', [core_1.ElementRef])], AceEditorDirective);
@@ -149,6 +186,7 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
     var AceEditorComponent = function () {
         function AceEditorComponent(elementRef) {
             this.textChanged = new core_1.EventEmitter();
+            this.textChange = new core_1.EventEmitter();
             this.style = {};
             this._options = {};
             this._readOnly = false;
@@ -156,6 +194,7 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
             this._mode = "html";
             this._autoUpdateContent = true;
             this._durationBeforeCallback = 0;
+            this._text = "";
             var el = elementRef.nativeElement;
             this._editor = ace["edit"](el);
             this.init();
@@ -173,9 +212,15 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
                 var newVal = me._editor.getValue();
                 if (newVal === me.oldText) return;
                 if (typeof me.oldText !== 'undefined') {
-                    if (me._durationBeforeCallback == 0) me.textChanged.emit(newVal);else {
+                    if (me._durationBeforeCallback == 0) {
+                        me._text = newVal;
+                        me.textChange.emit(newVal);
+                        me.textChanged.emit(newVal);
+                    } else {
                         if (me.timeoutSaving != null) clearTimeout(me.timeoutSaving);
                         me.timeoutSaving = setTimeout(function () {
+                            me._text = newVal;
+                            me.textChange.emit(newVal);
                             me.textChanged.emit(newVal);
                             me.timeoutSaving = null;
                         }, me._durationBeforeCallback);
@@ -233,6 +278,9 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
             }
         };
         Object.defineProperty(AceEditorComponent.prototype, "text", {
+            get: function () {
+                return this._text;
+            },
             set: function (text) {
                 this.setText(text);
             },
@@ -242,6 +290,7 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
         AceEditorComponent.prototype.setText = function (text) {
             if (text == null) text = "";
             if (this._autoUpdateContent == true) {
+                this._text = text;
                 this._editor.setValue(text);
                 this._editor.clearSelection();
                 this._editor.focus();
@@ -270,13 +319,14 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
         AceEditorComponent.prototype.getEditor = function () {
             return this._editor;
         };
-        __decorate([core_1.Output('textChanged'), __metadata('design:type', Object)], AceEditorComponent.prototype, "textChanged", void 0);
-        __decorate([core_1.Input('style'), __metadata('design:type', Object)], AceEditorComponent.prototype, "style", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', Object)], AceEditorComponent.prototype, "textChanged", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', Object)], AceEditorComponent.prototype, "textChange", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], AceEditorComponent.prototype, "style", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "options", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "readOnly", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "theme", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "mode", null);
-        __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "text", null);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], AceEditorComponent.prototype, "text", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "autoUpdateContent", null);
         __decorate([core_1.Input(), __metadata('design:type', Number), __metadata('design:paramtypes', [Number])], AceEditorComponent.prototype, "durationBeforeCallback", null);
         AceEditorComponent = __decorate([core_1.Component({

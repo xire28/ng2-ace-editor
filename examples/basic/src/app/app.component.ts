@@ -9,6 +9,7 @@ declare var ace:any;
 })
 export class AppComponent {
   content = "SELECT * FROM tabs;";
+  contentAutoUpdate = "SELECT * FROM autoUpdate;";
   @ViewChild('highlight') highlight;
 
   onRuleChange(e) {

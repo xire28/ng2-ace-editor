@@ -4,13 +4,17 @@ import 'brace/theme/monokai';
 import 'brace/mode/html';
 export declare class AceEditorDirective {
     textChanged: EventEmitter<{}>;
+    textChange: EventEmitter<{}>;
     _options: any;
     _readOnly: boolean;
     _theme: string;
     _mode: any;
     _autoUpdateContent: boolean;
+    _durationBeforeCallback: number;
+    _text: string;
     editor: any;
     oldText: any;
+    timeoutSaving: any;
     constructor(elementRef: ElementRef);
     init(): void;
     initEvents(): void;
@@ -19,7 +23,10 @@ export declare class AceEditorDirective {
     theme: any;
     mode: any;
     setMode(mode: any): void;
-    text: any;
+    text: string;
+    setText(text: any): void;
     autoUpdateContent: any;
+    durationBeforeCallback: number;
+    setDurationBeforeCallback(num: number): void;
     readonly aceEditor: any;
 }

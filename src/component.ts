@@ -11,8 +11,9 @@ declare var ace: any;
     styles: [':host { display:block;width:100%; }']
 })
 export class AceEditorComponent {
-    @Output('textChanged') textChanged = new EventEmitter();
-    @Input('style') style: any = {};
+    @Output() textChanged = new EventEmitter();
+    @Output() textChange = new EventEmitter();
+    @Input() style: any = {};
     _options: any = {};
     _readOnly: boolean = false;
     _theme: string = "monokai";
@@ -20,6 +21,7 @@ export class AceEditorComponent {
     _autoUpdateContent: boolean = true;
     _editor: any;
     _durationBeforeCallback: number = 0;
+    _text: string = "";
     oldText: any;
     timeoutSaving: any;
 
@@ -45,13 +47,17 @@ export class AceEditorComponent {
             let newVal = me._editor.getValue();
             if (newVal === me.oldText) return;
             if (typeof me.oldText !== 'undefined') {
-                if (me._durationBeforeCallback == 0)
+                if (me._durationBeforeCallback == 0) {
+                    me._text = newVal;
+                    me.textChange.emit(newVal);
                     me.textChanged.emit(newVal);
-                else {
+                } else {
                     if (me.timeoutSaving != null)
                         clearTimeout(me.timeoutSaving);
 
                     me.timeoutSaving = setTimeout(function () {
+                        me._text = newVal;
+                        me.textChange.emit(newVal);
                         me.textChanged.emit(newVal);
                         me.timeoutSaving = null;
                     }, me._durationBeforeCallback);
@@ -102,7 +108,11 @@ export class AceEditorComponent {
         }
     }
 
-    @Input() set text(text: any) {
+    @Input()
+    get text() {
+        return this._text;
+    }
+    set text(text: string) {
         this.setText(text);
     }
 
@@ -111,6 +121,7 @@ export class AceEditorComponent {
             text = "";
 
         if (this._autoUpdateContent == true) {
+            this._text = text;
             this._editor.setValue(text);
             this._editor.clearSelection();
             this._editor.focus();

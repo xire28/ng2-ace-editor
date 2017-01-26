@@ -4,6 +4,7 @@ import 'brace/theme/monokai';
 import 'brace/mode/html';
 export declare class AceEditorComponent {
     textChanged: EventEmitter<{}>;
+    textChange: EventEmitter<{}>;
     style: any;
     _options: any;
     _readOnly: boolean;
@@ -12,6 +13,7 @@ export declare class AceEditorComponent {
     _autoUpdateContent: boolean;
     _editor: any;
     _durationBeforeCallback: number;
+    _text: string;
     oldText: any;
     timeoutSaving: any;
     constructor(elementRef: ElementRef);
@@ -25,7 +27,7 @@ export declare class AceEditorComponent {
     setTheme(theme: any): void;
     mode: any;
     setMode(mode: any): void;
-    text: any;
+    text: string;
     setText(text: any): void;
     autoUpdateContent: any;
     setAutoUpdateContent(status: any): void;

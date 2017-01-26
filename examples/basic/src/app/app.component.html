@@ -21,4 +21,11 @@
   <ace-editor #highlight [text]="content"
               [mode]="'sql'"
               style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
+  <h2>Auto update</h2>
+  <ace-editor [(text)]="contentAutoUpdate"
+              [mode]="'sql'"
+              style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
+  <div ace-editor [(text)]="contentAutoUpdate"
+              [mode]="'sql'"
+              style="min-height: 200px; width:100%; overflow: auto;"></div>
 </div>
