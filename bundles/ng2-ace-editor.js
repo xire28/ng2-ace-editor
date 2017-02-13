@@ -114,12 +114,12 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
             configurable: true
         });
         AceEditorDirective.prototype.setText = function (text) {
-            if (text == null) text = "";
-            if (this._autoUpdateContent == true) {
-                this._text = text;
-                this.editor.setValue(text);
-                this.editor.clearSelection();
-                this.editor.focus();
+            if (this._text != text) {
+                if (text == null) text = "";
+                if (this._autoUpdateContent == true) {
+                    this._text = text;
+                    this.editor.setValue(text);
+                }
             }
         };
         Object.defineProperty(AceEditorDirective.prototype, "autoUpdateContent", {
@@ -288,12 +288,12 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
             configurable: true
         });
         AceEditorComponent.prototype.setText = function (text) {
-            if (text == null) text = "";
-            if (this._autoUpdateContent == true) {
-                this._text = text;
-                this._editor.setValue(text);
-                this._editor.clearSelection();
-                this._editor.focus();
+            if (this._text != text) {
+                if (text == null) text = "";
+                if (this._autoUpdateContent == true) {
+                    this._text = text;
+                    this._editor.setValue(text);
+                }
             }
         };
         Object.defineProperty(AceEditorComponent.prototype, "autoUpdateContent", {

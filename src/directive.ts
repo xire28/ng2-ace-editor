@@ -102,14 +102,14 @@ export class AceEditorDirective {
     }
 
     setText(text: any) {
-        if (text == null)
-            text = "";
+        if (this._text != text) {
+            if (text == null)
+                text = "";
 
-        if (this._autoUpdateContent == true) {
-            this._text = text;
-            this.editor.setValue(text);
-            this.editor.clearSelection();
-            this.editor.focus();
+            if (this._autoUpdateContent == true) {
+                this._text = text;
+                this.editor.setValue(text);
+            }
         }
     }
 

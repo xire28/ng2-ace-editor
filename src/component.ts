@@ -112,19 +112,20 @@ export class AceEditorComponent {
     get text() {
         return this._text;
     }
+
     set text(text: string) {
         this.setText(text);
     }
 
     setText(text: any) {
-        if (text == null)
-            text = "";
+        if (this._text != text) {
+            if (text == null)
+                text = "";
 
-        if (this._autoUpdateContent == true) {
-            this._text = text;
-            this._editor.setValue(text);
-            this._editor.clearSelection();
-            this._editor.focus();
+            if (this._autoUpdateContent == true) {
+                this._text = text;
+                this._editor.setValue(text);
+            }
         }
     }
 
