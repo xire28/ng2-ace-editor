@@ -19,6 +19,7 @@ export declare class AceEditorComponent {
     constructor(elementRef: ElementRef);
     init(): void;
     initEvents(): void;
+    updateText(): void;
     options: any;
     setOptions(options: any): void;
     readOnly: any;

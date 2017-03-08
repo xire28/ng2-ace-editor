@@ -42,27 +42,37 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
             this.setReadOnly(this._readOnly);
         };
         AceEditorComponent.prototype.initEvents = function () {
-            var me = this;
-            me._editor.on('change', function () {
-                var newVal = me._editor.getValue();
-                if (newVal === me.oldText) return;
-                if (typeof me.oldText !== 'undefined') {
-                    if (me._durationBeforeCallback == 0) {
-                        me._text = newVal;
-                        me.textChange.emit(newVal);
-                        me.textChanged.emit(newVal);
-                    } else {
-                        if (me.timeoutSaving != null) clearTimeout(me.timeoutSaving);
-                        me.timeoutSaving = setTimeout(function () {
-                            me._text = newVal;
-                            me.textChange.emit(newVal);
-                            me.textChanged.emit(newVal);
-                            me.timeoutSaving = null;
-                        }, me._durationBeforeCallback);
-                    }
-                }
-                me.oldText = newVal;
+            var _this = this;
+            this._editor.on('change', function () {
+                return _this.updateText();
             });
+            this._editor.on('paste', function () {
+                return _this.updateText();
+            });
+        };
+        AceEditorComponent.prototype.updateText = function () {
+            var newVal = this._editor.getValue();
+            if (newVal === this.oldText) {
+                return;
+            }
+            if (typeof this.oldText !== 'undefined') {
+                if (!this._durationBeforeCallback) {
+                    this._text = newVal;
+                    this.textChange.emit(newVal);
+                    this.textChanged.emit(newVal);
+                } else {
+                    if (this.timeoutSaving) {
+                        clearTimeout(this.timeoutSaving);
+                    }
+                    this.timeoutSaving = setTimeout(function () {
+                        this._text = newVal;
+                        this.textChange.emit(newVal);
+                        this.textChanged.emit(newVal);
+                        this.timeoutSaving = null;
+                    }, this._durationBeforeCallback);
+                }
+            }
+            this.oldText = newVal;
         };
         Object.defineProperty(AceEditorComponent.prototype, "options", {
             set: function (options) {
@@ -106,7 +116,7 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
         });
         AceEditorComponent.prototype.setMode = function (mode) {
             this._mode = mode;
-            if (typeof this._mode == 'object') {
+            if (typeof this._mode === 'object') {
                 this._editor.getSession().setMode(this._mode);
             } else {
                 this._editor.getSession().setMode("ace/mode/" + this._mode);
@@ -123,9 +133,11 @@ System.registerDynamic("src/component", ["@angular/core", "brace", "brace/theme/
             configurable: true
         });
         AceEditorComponent.prototype.setText = function (text) {
-            if (this._text != text) {
-                if (text == null) text = "";
-                if (this._autoUpdateContent == true) {
+            if (this._text !== text) {
+                if (text === null || text === undefined) {
+                    text = "";
+                }
+                if (this._autoUpdateContent === true) {
                     this._text = text;
                     this._editor.setValue(text);
                 }
@@ -220,25 +232,35 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
             var _this = this;
             var me = this;
             me.editor.on('change', function () {
-                var newVal = _this.editor.getValue();
-                if (newVal === _this.oldText) return;
-                if (typeof me.oldText !== 'undefined') {
-                    if (me._durationBeforeCallback == 0) {
-                        me._text = newVal;
-                        me.textChange.emit(newVal);
-                        me.textChanged.emit(newVal);
-                    } else {
-                        if (me.timeoutSaving != null) clearTimeout(me.timeoutSaving);
-                        me.timeoutSaving = setTimeout(function () {
-                            me._text = newVal;
-                            me.textChange.emit(newVal);
-                            me.textChanged.emit(newVal);
-                            me.timeoutSaving = null;
-                        }, me._durationBeforeCallback);
-                    }
-                }
-                _this.oldText = newVal;
+                return _this.updateText();
             });
+            me.editor.on('paste', function () {
+                return _this.updateText();
+            });
+        };
+        AceEditorDirective.prototype.updateText = function () {
+            var newVal = this.editor.getValue();
+            if (newVal === this.oldText) {
+                return;
+            }
+            if (typeof this.oldText !== 'undefined') {
+                if (!this._durationBeforeCallback) {
+                    this._text = newVal;
+                    this.textChange.emit(newVal);
+                    this.textChanged.emit(newVal);
+                } else {
+                    if (this.timeoutSaving != null) {
+                        clearTimeout(this.timeoutSaving);
+                    }
+                    this.timeoutSaving = setTimeout(function () {
+                        this._text = newVal;
+                        this.textChange.emit(newVal);
+                        this.textChanged.emit(newVal);
+                        this.timeoutSaving = null;
+                    }, this._durationBeforeCallback);
+                }
+            }
+            this.oldText = newVal;
         };
         Object.defineProperty(AceEditorDirective.prototype, "options", {
             set: function (options) {
@@ -273,7 +295,7 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
         });
         AceEditorDirective.prototype.setMode = function (mode) {
             this._mode = mode;
-            if (typeof this._mode == 'object') {
+            if (typeof this._mode === 'object') {
                 this.editor.getSession().setMode(this._mode);
             } else {
                 this.editor.getSession().setMode("ace/mode/" + this._mode);
@@ -290,9 +312,11 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
             configurable: true
         });
         AceEditorDirective.prototype.setText = function (text) {
-            if (this._text != text) {
-                if (text == null) text = "";
-                if (this._autoUpdateContent == true) {
+            if (this._text !== text) {
+                if (text === null || text === undefined) {
+                    text = "";
+                }
+                if (this._autoUpdateContent === true) {
                     this._text = text;
                     this.editor.setValue(text);
                 }
