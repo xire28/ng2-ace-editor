@@ -18,6 +18,7 @@ export declare class AceEditorDirective {
     constructor(elementRef: ElementRef);
     init(): void;
     initEvents(): void;
+    updateText(): void;
     options: any;
     readOnly: any;
     theme: any;

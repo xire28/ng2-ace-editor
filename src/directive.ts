@@ -40,28 +40,34 @@ export class AceEditorDirective {
     initEvents() {
         let me = this;
 
-        me.editor.on('change', () => {
-            let newVal = this.editor.getValue();
-            if (newVal === this.oldText) return;
-            if (typeof me.oldText !== 'undefined') {
-                if (me._durationBeforeCallback == 0) {
-                    me._text = newVal;
-                    me.textChange.emit(newVal);
-                    me.textChanged.emit(newVal);
-                } else {
-                    if (me.timeoutSaving != null)
-                        clearTimeout(me.timeoutSaving);
-
-                    me.timeoutSaving = setTimeout(function () {
-                        me._text = newVal;
-                        me.textChange.emit(newVal);
-                        me.textChanged.emit(newVal);
-                        me.timeoutSaving = null;
-                    }, me._durationBeforeCallback);
+        me.editor.on('change', () => this.updateText());
+        me.editor.on('paste', () => this.updateText());
+    }
+    
+    updateText() {
+        let newVal = this.editor.getValue();
+        if (newVal === this.oldText) {
+            return;
+        }
+        if (typeof this.oldText !== 'undefined') {
+            if (!this._durationBeforeCallback) {
+                this._text = newVal;
+                this.textChange.emit(newVal);
+                this.textChanged.emit(newVal);
+            } else {
+                if (this.timeoutSaving != null) {
+                    clearTimeout(this.timeoutSaving);
                 }
+
+                this.timeoutSaving = setTimeout(function () {
+                    this._text = newVal;
+                    this.textChange.emit(newVal);
+                    this.textChanged.emit(newVal);
+                    this.timeoutSaving = null;
+                }, this._durationBeforeCallback);
             }
-            this.oldText = newVal;
-        });
+        }
+        this.oldText = newVal;
     }
 
     @Input() set options(options: any) {
@@ -85,10 +91,9 @@ export class AceEditorDirective {
 
     setMode(mode: any) {
         this._mode = mode;
-        if (typeof this._mode == 'object') {
+        if (typeof this._mode === 'object') {
             this.editor.getSession().setMode(this._mode);
-        }
-        else {
+        } else {
             this.editor.getSession().setMode(`ace/mode/${this._mode}`);
         }
     }
@@ -102,11 +107,12 @@ export class AceEditorDirective {
     }
 
     setText(text: any) {
-        if (this._text != text) {
-            if (text == null)
+        if (this._text !== text) {
+            if (text === null || text === undefined) {
                 text = "";
+            }
 
-            if (this._autoUpdateContent == true) {
+            if (this._autoUpdateContent === true) {
                 this._text = text;
                 this.editor.setValue(text);
             }

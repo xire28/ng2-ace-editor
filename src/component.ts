@@ -41,30 +41,32 @@ export class AceEditorComponent {
     }
 
     initEvents() {
-        let me = this;
-
-        me._editor.on('change', () => {
-            let newVal = me._editor.getValue();
-            if (newVal === me.oldText) return;
-            if (typeof me.oldText !== 'undefined') {
-                if (me._durationBeforeCallback == 0) {
-                    me._text = newVal;
-                    me.textChange.emit(newVal);
-                    me.textChanged.emit(newVal);
-                } else {
-                    if (me.timeoutSaving != null)
-                        clearTimeout(me.timeoutSaving);
-
-                    me.timeoutSaving = setTimeout(function () {
-                        me._text = newVal;
-                        me.textChange.emit(newVal);
-                        me.textChanged.emit(newVal);
-                        me.timeoutSaving = null;
-                    }, me._durationBeforeCallback);
+        this._editor.on('change', () => this.updateText());
+        this._editor.on('paste', () => this.updateText());
+    }
+    
+    updateText() {
+        let newVal = this._editor.getValue();
+        if (newVal === this.oldText) { return; }
+        if (typeof this.oldText !== 'undefined') {
+            if (!this._durationBeforeCallback) {
+                this._text = newVal;
+                this.textChange.emit(newVal);
+                this.textChanged.emit(newVal);
+            } else {
+                if (this.timeoutSaving) {
+                    clearTimeout(this.timeoutSaving);
                 }
+
+                this.timeoutSaving = setTimeout(function () {
+                    this._text = newVal;
+                    this.textChange.emit(newVal);
+                    this.textChanged.emit(newVal);
+                    this.timeoutSaving = null;
+                }, this._durationBeforeCallback);
             }
-            me.oldText = newVal;
-        });
+        }
+        this.oldText = newVal;
     }
 
     @Input() set options(options: any) {
@@ -100,10 +102,9 @@ export class AceEditorComponent {
 
     setMode(mode: any) {
         this._mode = mode;
-        if (typeof this._mode == 'object') {
+        if (typeof this._mode === 'object') {
             this._editor.getSession().setMode(this._mode);
-        }
-        else {
+        } else {
             this._editor.getSession().setMode(`ace/mode/${this._mode}`);
         }
     }
@@ -118,11 +119,12 @@ export class AceEditorComponent {
     }
 
     setText(text: any) {
-        if (this._text != text) {
-            if (text == null)
+        if (this._text !== text) {
+            if (text === null || text === undefined) {
                 text = "";
+            }
 
-            if (this._autoUpdateContent == true) {
+            if (this._autoUpdateContent === true) {
                 this._text = text;
                 this._editor.setValue(text);
             }
