@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 
-declare var ace:any;
+declare var ace: any;
 
 @Component({
   selector: 'app-root',
@@ -11,6 +11,7 @@ export class AppComponent {
   content = "SELECT * FROM tabs;";
   contentAutoUpdate = "SELECT * FROM autoUpdate;";
   @ViewChild('highlight') highlight;
+  @ViewChild('editorInfinity') editorInfinity;
 
   onRuleChange(e) {
     console.log(e)
@@ -22,5 +23,6 @@ export class AppComponent {
     this.highlight.getEditor().session.addMarker(
       new Range(0, 0, 2, 1), "myMarker", "fullLine"
     );
+
   }
 }
