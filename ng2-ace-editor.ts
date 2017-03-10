@@ -5,4 +5,4 @@ import {AceEditorModule} from './src/module';
 export {AceEditorModule, AceEditorDirective, AceEditorComponent};
 
 declare var ace: any;
-ace.config.set('basePath', 'node_modules/ace-builds/src/');
+ace.config.set('basePath', 'node_modules/ace-builds/src-min/');
