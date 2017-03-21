@@ -115,6 +115,7 @@ export class AceEditorDirective {
             if (this._autoUpdateContent === true) {
                 this._text = text;
                 this.editor.setValue(text);
+                this.editor.clearSelection();
             }
         }
     }
