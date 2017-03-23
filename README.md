@@ -4,7 +4,7 @@
 Ace editor integration with typescript for angular 2.
 
 # Install
-`npm i -s ng2-ace-editor`
+`npm i -S ng2-ace-editor`
 
 # Use directive
 
