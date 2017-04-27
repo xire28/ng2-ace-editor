@@ -17,4 +17,9 @@ typings
 .idea/
 *.lock
 
-dist
+ng2-ace-editor.js
+src
+examples
+docs
+config
+bundles
