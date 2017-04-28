@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@angular/core": "2.0.0",
+    "@angular/forms": "2.0.0",
     "@types/hammerjs": "2.0.32",
     "@types/jasmine": "2.2.33",
     "@types/node": "6.0.38",
