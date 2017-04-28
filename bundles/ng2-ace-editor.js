@@ -1,4 +1,4 @@
-System.registerDynamic("dist/component", ["@angular/core", "brace", "brace/theme/monokai", "brace/mode/html"], true, function ($__require, exports, module) {
+System.registerDynamic("dist/component", ["@angular/core", "@angular/forms", "brace", "brace/theme/monokai", "brace/mode/html"], true, function ($__require, exports, module) {
     "use strict";
 
     var define,
@@ -15,6 +15,7 @@ System.registerDynamic("dist/component", ["@angular/core", "brace", "brace/theme
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1 = $__require("@angular/core");
+    var forms_1 = $__require("@angular/forms");
     $__require("brace");
     $__require("brace/theme/monokai");
     $__require("brace/mode/html");
@@ -30,6 +31,8 @@ System.registerDynamic("dist/component", ["@angular/core", "brace", "brace/theme
             this._autoUpdateContent = true;
             this._durationBeforeCallback = 0;
             this._text = "";
+            this._onChange = function (_) {};
+            this._onTouched = function () {};
             var el = elementRef.nativeElement;
             this._editor = ace["edit"](el);
             this.init();
@@ -60,6 +63,7 @@ System.registerDynamic("dist/component", ["@angular/core", "brace", "brace/theme
                     this._text = newVal;
                     this.textChange.emit(newVal);
                     this.textChanged.emit(newVal);
+                    this._onChange(newVal);
                 } else {
                     if (this.timeoutSaving) {
                         clearTimeout(this.timeoutSaving);
@@ -68,6 +72,7 @@ System.registerDynamic("dist/component", ["@angular/core", "brace", "brace/theme
                         this._text = newVal;
                         this.textChange.emit(newVal);
                         this.textChanged.emit(newVal);
+                        this._onChange(newVal);
                         this.timeoutSaving = null;
                     }, this._durationBeforeCallback);
                 }
@@ -122,6 +127,25 @@ System.registerDynamic("dist/component", ["@angular/core", "brace", "brace/theme
                 this._editor.getSession().setMode("ace/mode/" + this._mode);
             }
         };
+        Object.defineProperty(AceEditorComponent.prototype, "value", {
+            get: function () {
+                return this.text;
+            },
+            set: function (value) {
+                this.setText(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        AceEditorComponent.prototype.writeValue = function (value) {
+            this.setText(value);
+        };
+        AceEditorComponent.prototype.registerOnChange = function (fn) {
+            this._onChange = fn;
+        };
+        AceEditorComponent.prototype.registerOnTouched = function (fn) {
+            this._onTouched = fn;
+        };
         Object.defineProperty(AceEditorComponent.prototype, "text", {
             get: function () {
                 return this._text;
@@ -133,14 +157,14 @@ System.registerDynamic("dist/component", ["@angular/core", "brace", "brace/theme
             configurable: true
         });
         AceEditorComponent.prototype.setText = function (text) {
-            if (this._text !== text) {
-                if (text === null || text === undefined) {
-                    text = "";
-                }
-                if (this._autoUpdateContent === true) {
-                    this._text = text;
-                    this._editor.setValue(text);
-                }
+            if (text === null || text === undefined) {
+                text = "";
+            }
+            if (this._text !== text && this._autoUpdateContent === true) {
+                this._text = text;
+                this._editor.setValue(text);
+                this._onChange(text);
+                this._editor.clearSelection();
             }
         };
         Object.defineProperty(AceEditorComponent.prototype, "autoUpdateContent", {
@@ -173,13 +197,21 @@ System.registerDynamic("dist/component", ["@angular/core", "brace", "brace/theme
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "readOnly", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "theme", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "mode", null);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], AceEditorComponent.prototype, "value", null);
         __decorate([core_1.Input(), __metadata('design:type', Object)], AceEditorComponent.prototype, "text", null);
         __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], AceEditorComponent.prototype, "autoUpdateContent", null);
         __decorate([core_1.Input(), __metadata('design:type', Number), __metadata('design:paramtypes', [Number])], AceEditorComponent.prototype, "durationBeforeCallback", null);
         AceEditorComponent = __decorate([core_1.Component({
             selector: 'ace-editor',
             template: '',
-            styles: [':host { display:block;width:100%; }']
+            styles: [':host { display:block;width:100%; }'],
+            providers: [{
+                provide: forms_1.NG_VALUE_ACCESSOR,
+                useExisting: core_1.forwardRef(function () {
+                    return AceEditorComponent;
+                }),
+                multi: true
+            }]
         }), __metadata('design:paramtypes', [core_1.ElementRef])], AceEditorComponent);
         return AceEditorComponent;
     }();

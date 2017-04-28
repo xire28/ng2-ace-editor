@@ -10,6 +10,7 @@ declare var ace: any;
 export class AppComponent {
   content = "SELECT * FROM tabs;";
   contentAutoUpdate = "SELECT * FROM autoUpdate;";
+  myCode = "SELECT * FROM tabs;";
   @ViewChild('highlight') highlight;
   @ViewChild('editorInfinity') editorInfinity;
 

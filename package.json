@@ -1,6 +1,6 @@
 {
   "name": "ng2-ace-editor",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "Ace editor integration with typescript for angular 2.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

@@ -153,6 +153,7 @@ export class AceEditorComponent implements ControlValueAccessor {
             this._text = text;
             this._editor.setValue(text);
             this._onChange(text);
+            this._editor.clearSelection();
         }
     }
 

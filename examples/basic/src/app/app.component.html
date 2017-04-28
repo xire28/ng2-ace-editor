@@ -32,4 +32,9 @@
   <ace-editor #editorInfinity [text]="content"
               [options]="{maxLines: 'Infinity'}"
               style="min-height: 50px; width:100%;"></ace-editor>
+  <h1>NgModel</h1>
+  <ace-editor [(ngModel)]="myCode"
+              style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
+  <ace-editor [(ngModel)]="myCode"
+              style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
 </div>
