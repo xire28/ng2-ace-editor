@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Output, ElementRef, Input} from '@angular/core';
+import {Component, EventEmitter, Output, ElementRef, Input, forwardRef} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import 'brace';
 import 'brace/theme/monokai';
 import 'brace/mode/html';
@@ -8,9 +9,14 @@ declare var ace: any;
 @Component({
     selector: 'ace-editor',
     template: '',
-    styles: [':host { display:block;width:100%; }']
+    styles: [':host { display:block;width:100%; }'],
+    providers: [{
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => AceEditorComponent),
+        multi: true
+    }]
 })
-export class AceEditorComponent {
+export class AceEditorComponent implements ControlValueAccessor {
     @Output() textChanged = new EventEmitter();
     @Output() textChange = new EventEmitter();
     @Input() style: any = {};
@@ -53,6 +59,7 @@ export class AceEditorComponent {
                 this._text = newVal;
                 this.textChange.emit(newVal);
                 this.textChanged.emit(newVal);
+                this._onChange(newVal);
             } else {
                 if (this.timeoutSaving) {
                     clearTimeout(this.timeoutSaving);
@@ -62,6 +69,7 @@ export class AceEditorComponent {
                     this._text = newVal;
                     this.textChange.emit(newVal);
                     this.textChanged.emit(newVal);
+                    this._onChange(newVal);
                     this.timeoutSaving = null;
                 }, this._durationBeforeCallback);
             }
@@ -108,26 +116,43 @@ export class AceEditorComponent {
             this._editor.getSession().setMode(`ace/mode/${this._mode}`);
         }
     }
-
+    
+    get value() {
+        return this.text;
+    }
     @Input()
+    set value(value: string) {
+        this.setText(value);
+    }
+    
+    writeValue(value: any) {
+        this.setText(value);
+    }
+    private _onChange = (_: any) => { };
+    registerOnChange(fn: any) {
+        this._onChange = fn;
+    }
+    private _onTouched = () => { };
+    registerOnTouched(fn: any) {
+        this._onTouched = fn;
+    }
+    
     get text() {
         return this._text;
     }
-
+    @Input()
     set text(text: string) {
         this.setText(text);
     }
 
     setText(text: any) {
-        if (this._text !== text) {
-            if (text === null || text === undefined) {
-                text = "";
-            }
-
-            if (this._autoUpdateContent === true) {
-                this._text = text;
-                this._editor.setValue(text);
-            }
+        if (text === null || text === undefined) {
+            text = "";
+        }
+        if (this._text !== text && this._autoUpdateContent === true) {
+            this._text = text;
+            this._editor.setValue(text);
+            this._onChange(text);
         }
     }
 
