@@ -9,8 +9,6 @@
     "inlineSources": true,
     "declaration": true,
     "moduleResolution": "node",
-    "rootDir": "src",
-    "outDir": "dist",
     "types": [
       "hammerjs",
       "jasmine",
@@ -19,10 +17,9 @@
     "lib": ["es2015", "dom"]
   },
   "files": [
-    "src/index.ts",
+    "ng2-ace-editor.ts",
     "src/directive.ts",
-    "src/component.ts",
-    "src/module.ts"
+    "src/component.ts"
   ],
   "exclude": [
     "node_modules",
