@@ -16,5 +16,3 @@ typings
 .DS_Store
 .idea/
 *.lock
-
-dist
