@@ -1,4 +1,4 @@
-System.registerDynamic("dist/component", ["@angular/core", "@angular/forms", "brace", "brace/theme/monokai", "brace/mode/html"], true, function ($__require, exports, module) {
+System.registerDynamic("src/component", ["@angular/core", "@angular/forms", "brace", "brace/theme/monokai", "brace/mode/html"], true, function ($__require, exports, module) {
     "use strict";
 
     var define,
@@ -218,7 +218,7 @@ System.registerDynamic("dist/component", ["@angular/core", "@angular/forms", "br
     exports.AceEditorComponent = AceEditorComponent;
     return module.exports;
 });
-System.registerDynamic("dist/directive", ["@angular/core", "brace", "brace/theme/monokai", "brace/mode/html"], true, function ($__require, exports, module) {
+System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/monokai", "brace/mode/html"], true, function ($__require, exports, module) {
     "use strict";
 
     var define,
@@ -396,7 +396,7 @@ System.registerDynamic("dist/directive", ["@angular/core", "brace", "brace/theme
     exports.AceEditorDirective = AceEditorDirective;
     return module.exports;
 });
-System.registerDynamic("dist/module", ["@angular/core", "./component", "./directive"], true, function ($__require, exports, module) {
+System.registerDynamic("src/module", ["@angular/core", "./component", "./directive"], true, function ($__require, exports, module) {
     "use strict";
 
     var define,
@@ -428,27 +428,18 @@ System.registerDynamic("dist/module", ["@angular/core", "./component", "./direct
     exports.AceEditorModule = AceEditorModule;
     return module.exports;
 });
-System.registerDynamic('dist/index', ['./directive', './component', './module'], true, function ($__require, exports, module) {
+System.registerDynamic('ng2-ace-editor', ['./src/directive', './src/component', './src/module'], true, function ($__require, exports, module) {
   "use strict";
 
   var define,
       global = this || self,
       GLOBAL = global;
-  var directive_1 = $__require('./directive');
+  var directive_1 = $__require('./src/directive');
   exports.AceEditorDirective = directive_1.AceEditorDirective;
-  var component_1 = $__require('./component');
+  var component_1 = $__require('./src/component');
   exports.AceEditorComponent = component_1.AceEditorComponent;
-  var module_1 = $__require('./module');
+  var module_1 = $__require('./src/module');
   exports.AceEditorModule = module_1.AceEditorModule;
   ace.config.set('basePath', 'node_modules/ace-builds/src-min/');
-  return module.exports;
-});
-System.registerDynamic("ng2-ace-editor", ["./dist/index"], true, function ($__require, exports, module) {
-  "use strict";
-
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  exports = $__require("./dist/index");
   return module.exports;
 });
