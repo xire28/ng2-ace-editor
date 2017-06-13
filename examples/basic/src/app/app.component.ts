@@ -24,6 +24,5 @@ export class AppComponent {
     this.highlight.getEditor().session.addMarker(
       new Range(0, 0, 2, 1), "myMarker", "fullLine"
     );
-
   }
 }
