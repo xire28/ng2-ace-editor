@@ -52,7 +52,7 @@ export class AceEditorComponent implements ControlValueAccessor {
     }
     
     updateText() {
-        let newVal = this._editor.getValue();
+        let newVal = this._editor.getValue(), that = this;
         if (newVal === this.oldText) { return; }
         if (typeof this.oldText !== 'undefined') {
             if (!this._durationBeforeCallback) {
@@ -66,11 +66,10 @@ export class AceEditorComponent implements ControlValueAccessor {
                 }
 
                 this.timeoutSaving = setTimeout(function () {
-                    this._text = newVal;
-                    this.textChange.emit(newVal);
-                    this.textChanged.emit(newVal);
-                    this._onChange(newVal);
-                    this.timeoutSaving = null;
+                    that._text = newVal;
+                    that.textChange.emit(newVal);
+                    that.textChanged.emit(newVal);
+                    that.timeoutSaving = null;
                 }, this._durationBeforeCallback);
             }
         }

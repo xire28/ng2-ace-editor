@@ -54,7 +54,8 @@ System.registerDynamic("src/component", ["@angular/core", "@angular/forms", "bra
             });
         };
         AceEditorComponent.prototype.updateText = function () {
-            var newVal = this._editor.getValue();
+            var newVal = this._editor.getValue(),
+                that = this;
             if (newVal === this.oldText) {
                 return;
             }
@@ -69,11 +70,10 @@ System.registerDynamic("src/component", ["@angular/core", "@angular/forms", "bra
                         clearTimeout(this.timeoutSaving);
                     }
                     this.timeoutSaving = setTimeout(function () {
-                        this._text = newVal;
-                        this.textChange.emit(newVal);
-                        this.textChanged.emit(newVal);
-                        this._onChange(newVal);
-                        this.timeoutSaving = null;
+                        that._text = newVal;
+                        that.textChange.emit(newVal);
+                        that.textChanged.emit(newVal);
+                        that.timeoutSaving = null;
                     }, this._durationBeforeCallback);
                 }
             }
@@ -271,7 +271,8 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
             });
         };
         AceEditorDirective.prototype.updateText = function () {
-            var newVal = this.editor.getValue();
+            var newVal = this.editor.getValue(),
+                that = this;
             if (newVal === this.oldText) {
                 return;
             }
@@ -285,10 +286,10 @@ System.registerDynamic("src/directive", ["@angular/core", "brace", "brace/theme/
                         clearTimeout(this.timeoutSaving);
                     }
                     this.timeoutSaving = setTimeout(function () {
-                        this._text = newVal;
-                        this.textChange.emit(newVal);
-                        this.textChanged.emit(newVal);
-                        this.timeoutSaving = null;
+                        that._text = newVal;
+                        that.textChange.emit(newVal);
+                        that.textChanged.emit(newVal);
+                        that.timeoutSaving = null;
                     }, this._durationBeforeCallback);
                 }
             }

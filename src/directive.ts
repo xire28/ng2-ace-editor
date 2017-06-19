@@ -45,7 +45,7 @@ export class AceEditorDirective {
     }
     
     updateText() {
-        let newVal = this.editor.getValue();
+        let newVal = this.editor.getValue(), that = this;
         if (newVal === this.oldText) {
             return;
         }
@@ -60,10 +60,10 @@ export class AceEditorDirective {
                 }
 
                 this.timeoutSaving = setTimeout(function () {
-                    this._text = newVal;
-                    this.textChange.emit(newVal);
-                    this.textChanged.emit(newVal);
-                    this.timeoutSaving = null;
+                    that._text = newVal;
+                    that.textChange.emit(newVal);
+                    that.textChanged.emit(newVal);
+                    that.timeoutSaving = null;
                 }, this._durationBeforeCallback);
             }
         }
