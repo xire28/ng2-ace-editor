@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ElementRef, Input, forwardRef} from '@angular/core';
+import {Component, EventEmitter, Output, ElementRef, Input, forwardRef, OnInit} from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import 'brace';
 import 'brace/theme/monokai';
@@ -16,7 +16,7 @@ declare var ace: any;
         multi: true
     }]
 })
-export class AceEditorComponent implements ControlValueAccessor {
+export class AceEditorComponent implements ControlValueAccessor, OnInit {
     @Output() textChanged = new EventEmitter();
     @Output() textChange = new EventEmitter();
     @Input() style: any = {};
@@ -34,7 +34,9 @@ export class AceEditorComponent implements ControlValueAccessor {
     constructor(elementRef: ElementRef) {
         let el = elementRef.nativeElement;
         this._editor = ace["edit"](el);
+    }
 
+    ngOnInit(){
         this.init();
         this.initEvents();
     }
