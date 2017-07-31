@@ -36,7 +36,7 @@ export class AceEditorComponent implements ControlValueAccessor, OnInit {
         this._editor = ace["edit"](el);
     }
 
-    ngOnInit(){
+    ngOnInit() {
         this.init();
         this.initEvents();
     }
@@ -52,10 +52,12 @@ export class AceEditorComponent implements ControlValueAccessor, OnInit {
         this._editor.on('change', () => this.updateText());
         this._editor.on('paste', () => this.updateText());
     }
-    
+
     updateText() {
         let newVal = this._editor.getValue(), that = this;
-        if (newVal === this.oldText) { return; }
+        if (newVal === this.oldText) {
+            return;
+        }
         if (typeof this.oldText !== 'undefined') {
             if (!this._durationBeforeCallback) {
                 this._text = newVal;
@@ -117,30 +119,38 @@ export class AceEditorComponent implements ControlValueAccessor, OnInit {
             this._editor.getSession().setMode(`ace/mode/${this._mode}`);
         }
     }
-    
+
     get value() {
         return this.text;
     }
+
     @Input()
     set value(value: string) {
         this.setText(value);
     }
-    
+
     writeValue(value: any) {
         this.setText(value);
     }
-    private _onChange = (_: any) => { };
+
+    private _onChange = (_: any) => {
+    };
+
     registerOnChange(fn: any) {
         this._onChange = fn;
     }
-    private _onTouched = () => { };
+
+    private _onTouched = () => {
+    };
+
     registerOnTouched(fn: any) {
         this._onTouched = fn;
     }
-    
+
     get text() {
         return this._text;
     }
+
     @Input()
     set text(text: string) {
         this.setText(text);
