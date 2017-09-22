@@ -41,10 +41,8 @@ export class AceEditorDirective implements OnInit {
     }
 
     initEvents() {
-        let me = this;
-
-        me.editor.on('change', () => this.updateText());
-        me.editor.on('paste', () => this.updateText());
+        this.editor.on('change', () => this.updateText());
+        this.editor.on('paste', () => this.updateText());
     }
 
     updateText() {
@@ -52,23 +50,21 @@ export class AceEditorDirective implements OnInit {
         if (newVal === this.oldText) {
             return;
         }
-        if (typeof this.oldText !== 'undefined') {
-            if (!this._durationBeforeCallback) {
-                this._text = newVal;
-                this.textChange.emit(newVal);
-                this.textChanged.emit(newVal);
-            } else {
-                if (this.timeoutSaving != null) {
-                    clearTimeout(this.timeoutSaving);
-                }
-
-                this.timeoutSaving = setTimeout(function() {
-                    that._text = newVal;
-                    that.textChange.emit(newVal);
-                    that.textChanged.emit(newVal);
-                    that.timeoutSaving = null;
-                }, this._durationBeforeCallback);
+        if (!this._durationBeforeCallback) {
+            this._text = newVal;
+            this.textChange.emit(newVal);
+            this.textChanged.emit(newVal);
+        } else {
+            if (this.timeoutSaving != null) {
+                clearTimeout(this.timeoutSaving);
             }
+
+            this.timeoutSaving = setTimeout(function() {
+                that._text = newVal;
+                that.textChange.emit(newVal);
+                that.textChanged.emit(newVal);
+                that.timeoutSaving = null;
+            }, this._durationBeforeCallback);
         }
         this.oldText = newVal;
     }

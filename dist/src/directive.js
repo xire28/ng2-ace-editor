@@ -29,32 +29,29 @@ var AceEditorDirective = /** @class */ (function () {
     };
     AceEditorDirective.prototype.initEvents = function () {
         var _this = this;
-        var me = this;
-        me.editor.on('change', function () { return _this.updateText(); });
-        me.editor.on('paste', function () { return _this.updateText(); });
+        this.editor.on('change', function () { return _this.updateText(); });
+        this.editor.on('paste', function () { return _this.updateText(); });
     };
     AceEditorDirective.prototype.updateText = function () {
         var newVal = this.editor.getValue(), that = this;
         if (newVal === this.oldText) {
             return;
         }
-        if (typeof this.oldText !== 'undefined') {
-            if (!this._durationBeforeCallback) {
-                this._text = newVal;
-                this.textChange.emit(newVal);
-                this.textChanged.emit(newVal);
+        if (!this._durationBeforeCallback) {
+            this._text = newVal;
+            this.textChange.emit(newVal);
+            this.textChanged.emit(newVal);
+        }
+        else {
+            if (this.timeoutSaving != null) {
+                clearTimeout(this.timeoutSaving);
             }
-            else {
-                if (this.timeoutSaving != null) {
-                    clearTimeout(this.timeoutSaving);
-                }
-                this.timeoutSaving = setTimeout(function () {
-                    that._text = newVal;
-                    that.textChange.emit(newVal);
-                    that.textChanged.emit(newVal);
-                    that.timeoutSaving = null;
-                }, this._durationBeforeCallback);
-            }
+            this.timeoutSaving = setTimeout(function () {
+                that._text = newVal;
+                that.textChange.emit(newVal);
+                that.textChanged.emit(newVal);
+                that.timeoutSaving = null;
+            }, this._durationBeforeCallback);
         }
         this.oldText = newVal;
     };
