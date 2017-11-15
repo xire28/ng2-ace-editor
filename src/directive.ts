@@ -1,7 +1,7 @@
-import { Directive, EventEmitter, Output, ElementRef, Input, OnInit } from '@angular/core';
-import 'brace';
-import 'brace/theme/monokai';
-import 'brace/mode/html';
+import {Directive, EventEmitter, Output, ElementRef, Input, OnInit} from "@angular/core";
+import "brace";
+import "brace/theme/monokai";
+import "brace/mode/html";
 
 declare var ace: any;
 
@@ -59,7 +59,7 @@ export class AceEditorDirective implements OnInit {
                 clearTimeout(this.timeoutSaving);
             }
 
-            this.timeoutSaving = setTimeout(function() {
+            this.timeoutSaving = setTimeout(function () {
                 that._text = newVal;
                 that.textChange.emit(newVal);
                 that.textChanged.emit(newVal);
