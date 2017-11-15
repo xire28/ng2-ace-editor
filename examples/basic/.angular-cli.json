@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "basic"
+    "name": "test-fx"
   },
   "apps": [
     {
@@ -22,9 +22,7 @@
         "styles.css"
       ],
       "scripts": [
-        "../node_modules/ace-builds/src-min/ace.js",
-        "../node_modules/ace-builds/src-min/mode-sql.js",
-        "../node_modules/ace-builds/src-min/theme-twilight.js"
+        "../node_modules/ace-builds/src-min/ace.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
