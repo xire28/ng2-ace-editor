@@ -1,7 +1,7 @@
 import {Component, ViewChild} from "@angular/core";
 import "brace/theme/github";
 import "brace/mode/sql";
-//declare let ace: any;
+declare let ace: any;
 
 @Component({
   selector: 'app-root',
@@ -21,11 +21,11 @@ export class AppComponent {
   }
 
   ngAfterViewInit() {
-    //var Range = ace.require('ace/range').Range
+    var Range = ace.require('ace/range').Range
 
-    /*this.highlight.getEditor().session.addMarker(
-     new Range(0, 0, 2, 1), "myMarker", "fullLine"
-     );*/
+    this.highlight.getEditor().session.addMarker(
+      new Range(0, 0, 2, 1), "myMarker", "fullLine"
+    );
 
     this.firstEditor.getEditor().session.setOption("useWorker", true);
   }
