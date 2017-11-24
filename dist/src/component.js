@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Output, ElementRef, Input, forwardRef, OnInit} from '@angular/core';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
-import 'brace';
-import 'brace/theme/monokai';
-import 'brace/mode/html';
+import {Component, EventEmitter, Output, ElementRef, Input, forwardRef, OnInit} from "@angular/core";
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from "@angular/forms";
+import "brace";
+import "brace/theme/monokai";
+import "brace/mode/html";
 var AceEditorComponent = /** @class */ (function () {
     function AceEditorComponent(elementRef) {
         var el = elementRef.nativeElement;

@@ -1,8 +1,8 @@
-import { EventEmitter, ElementRef, OnInit } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
-import 'brace';
-import 'brace/theme/monokai';
-import 'brace/mode/html';
+import {EventEmitter, ElementRef, OnInit} from "@angular/core";
+import {ControlValueAccessor} from "@angular/forms";
+import "brace";
+import "brace/theme/monokai";
+import "brace/mode/html";
 export declare class AceEditorComponent implements ControlValueAccessor, OnInit {
     textChanged: EventEmitter<{}>;
     textChange: EventEmitter<{}>;

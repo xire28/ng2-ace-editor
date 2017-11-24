@@ -1,7 +1,7 @@
-import {Directive, EventEmitter, Output, ElementRef, Input, OnInit} from '@angular/core';
-import 'brace';
-import 'brace/theme/monokai';
-import 'brace/mode/html';
+import {Directive, EventEmitter, Output, ElementRef, Input, OnInit} from "@angular/core";
+import "brace";
+import "brace/theme/monokai";
+import "brace/mode/html";
 var AceEditorDirective = /** @class */ (function () {
     function AceEditorDirective(elementRef) {
         var el = elementRef.nativeElement;

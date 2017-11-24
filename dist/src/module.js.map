@@ -6,8 +6,8 @@
     "../../src/module.ts"
   ],
   "names": [],
-  "mappings": "AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,eAAe,CAAC;AAEzC,OAAO,EAAE,kBAAkB,EAAE,MAAM,aAAa,CAAC;AACjD,OAAO,EAAE,kBAAkB,EAAE,MAAM,aAAa,CAAC;AAEjD,IAAM,IAAI,GAAG;IACT,kBAAkB;IAClB,kBAAkB;CACrB,CAAA;;;;0BARD",
+  "mappings": "AAAA,OAAO,EAAC,QAAQ,EAAC,MAAM,eAAe,CAAC;AACvC,OAAO,EAAC,kBAAkB,EAAC,MAAM,aAAa,CAAC;AAC/C,OAAO,EAAC,kBAAkB,EAAC,MAAM,aAAa,CAAC;AAE/C,IAAM,IAAI,GAAG;IACT,kBAAkB;IAClB,kBAAkB;CACrB,CAAA;;;;0BAPD",
   "sourcesContent": [
-    "import { NgModule } from '@angular/core';\r\n\r\nimport { AceEditorComponent } from './component';\r\nimport { AceEditorDirective } from './directive';\r\n\r\nconst list = [\r\n    AceEditorComponent,\r\n    AceEditorDirective\r\n]\r\n\r\n@NgModule({\r\n    declarations: [\r\n        ...list\r\n    ],\r\n    imports: [],\r\n    providers: [],\r\n    exports: list\r\n})\r\nexport class AceEditorModule {\r\n\r\n}\r\n"
+    "import {NgModule} from \"@angular/core\";\r\nimport {AceEditorComponent} from \"./component\";\r\nimport {AceEditorDirective} from \"./directive\";\r\n\r\nconst list = [\r\n    AceEditorComponent,\r\n    AceEditorDirective\r\n]\r\n\r\n@NgModule({\r\n    declarations: [\r\n        ...list\r\n    ],\r\n    imports: [],\r\n    providers: [],\r\n    exports: list\r\n})\r\nexport class AceEditorModule {\r\n\r\n}\r\n"
   ]
 }

@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { AceEditorComponent } from './component';
-import { AceEditorDirective } from './directive';
+import {NgModule} from "@angular/core";
+import {AceEditorComponent} from "./component";
+import {AceEditorDirective} from "./directive";
 var list = [
     AceEditorComponent,
     AceEditorDirective
