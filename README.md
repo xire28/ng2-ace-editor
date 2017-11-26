@@ -1,7 +1,7 @@
 # ng2-ace-editor
 
 [![npm version](https://badge.fury.io/js/ng2-ace-editor.svg)](https://www.npmjs.com/package/ng2-ace-editor) 
-Ace editor integration with typescript for angular 2.
+Ace editor integration with typescript for angular 4 - 5.
 
 # Install
 `npm i -S ng2-ace-editor`
