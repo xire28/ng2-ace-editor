@@ -1,6 +1,6 @@
 {
   "name": "ng2-ace-editor",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Ace editor integration with typescript for Angular.",
   "main": "bundles/ng2-ace-editor.umd.min.js",
   "module": "index.js",
@@ -10,7 +10,6 @@
     "url": "git+https://github.com/fxmontigny/ng2-ace-editor.git"
   },
   "keywords": [
-    "angular4",
     "angular5",
     "angular cli",
     "ace",
@@ -32,6 +31,6 @@
     "brace": "^0.10.0"
   },
   "peerDependencies": {
-    "@angular/core": "^4.0.0 || ^5.0.0"
+    "@angular/core": "^5.0.0"
   }
 }
