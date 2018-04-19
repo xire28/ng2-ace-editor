@@ -2,7 +2,7 @@ import { Directive, EventEmitter, Output, ElementRef, Input } from "@angular/cor
 import "brace";
 import "brace/theme/monokai";
 import "brace/mode/html";
-var AceEditorDirective = (function () {
+var AceEditorDirective = /** @class */ (function () {
     function AceEditorDirective(elementRef) {
         this.textChanged = new EventEmitter();
         this.textChange = new EventEmitter();

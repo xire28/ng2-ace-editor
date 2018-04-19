@@ -4,7 +4,7 @@
 	(factory((global.ng = global.ng || {}, global.ng.ng2aceeditor = {}),global.ng.core,null,null,null,global.ng.forms));
 }(this, (function (exports,core,brace,monokai,html,forms) { 'use strict';
 
-var AceEditorDirective = (function () {
+var AceEditorDirective = /** @class */ (function () {
     function AceEditorDirective(elementRef) {
         this.textChanged = new core.EventEmitter();
         this.textChange = new core.EventEmitter();
@@ -166,7 +166,7 @@ var AceEditorDirective = (function () {
     return AceEditorDirective;
 }());
 
-var AceEditorComponent = (function () {
+var AceEditorComponent = /** @class */ (function () {
     function AceEditorComponent(elementRef) {
         this.textChanged = new core.EventEmitter();
         this.textChange = new core.EventEmitter();
@@ -373,7 +373,7 @@ var list = [
     AceEditorComponent,
     AceEditorDirective
 ];
-var AceEditorModule = (function () {
+var AceEditorModule = /** @class */ (function () {
     function AceEditorModule() {
     }
     AceEditorModule.decorators = [
@@ -384,8 +384,6 @@ var AceEditorModule = (function () {
                     exports: list
                 },] },
     ];
-    /** @nocollapse */
-    AceEditorModule.ctorParameters = function () { return []; };
     return AceEditorModule;
 }());
 

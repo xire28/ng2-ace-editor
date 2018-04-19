@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import "brace";
 import "brace/theme/monokai";
 import "brace/mode/html";
-var AceEditorComponent = (function () {
+var AceEditorComponent = /** @class */ (function () {
     function AceEditorComponent(elementRef) {
         this.textChanged = new EventEmitter();
         this.textChange = new EventEmitter();
